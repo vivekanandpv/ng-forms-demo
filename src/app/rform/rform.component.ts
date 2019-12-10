@@ -9,9 +9,6 @@ import {
   FormGroup
 } from '@angular/forms';
 import { Observable, of, Subscription } from 'rxjs';
-import { delay, map, concatMap, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { RestService } from '../_services/rest.service';
 
 @Component({
   selector: 'app-rform',
@@ -21,7 +18,6 @@ import { RestService } from '../_services/rest.service';
 export class RformComponent implements OnInit, OnDestroy {
   form: FormGroup;
   validName = 'Default';
-  counter = 0;
   createSubscription: Subscription;
 
   constructor(private formBuilder: FormBuilder) {
@@ -57,11 +53,6 @@ export class RformComponent implements OnInit, OnDestroy {
 
   onSubmitHandler() {
     console.log('Form posted', this.form.value);
-    this.createSubscription = this.restService
-      .updateCustomerForm(this.form.value)
-      .subscribe(result => {
-        console.log('Server Responded', result);
-      });
   }
 
   asyncNameValidator(
