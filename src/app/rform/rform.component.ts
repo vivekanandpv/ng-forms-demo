@@ -61,7 +61,7 @@ export class RformComponent implements OnInit, OnDestroy {
   onSubmitHandler() {
     console.log('Form posted', this.form.value);
     this.createSubscription = this.restService
-      .createCustomerForm(this.form.value)
+      .updateCustomerForm(this.form.value)
       .subscribe(result => {
         console.log('Server Responded', result);
       });
@@ -82,7 +82,6 @@ export class RformComponent implements OnInit, OnDestroy {
           return { async_error: true };
         }
       })
-      //tap(v => console.log('Tapping from server', v))
     );
 
     // if (this.validName === val) {
