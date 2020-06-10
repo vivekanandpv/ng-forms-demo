@@ -30,6 +30,15 @@
       Password
     </label>
     <input type="password" class="form-control" formControlName="password" />
+    <p
+      class="text-danger"
+      *ngIf="password.touched && password.errors?.required"
+    >
+      Password is required!
+    </p>
+    <p class="text-danger" *ngIf="password.dirty && password.errors?.pattern">
+      Password must be all numbers
+    </p>
   </div>
 
   <button class="btn btn-primary" type="submit">Submit</button>
