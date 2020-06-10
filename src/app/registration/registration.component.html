@@ -6,6 +6,12 @@
       Username
     </label>
     <input type="text" class="form-control" formControlName="username" />
+    <p
+      class="text-danger"
+      *ngIf="username.dirty && username.errors?.name_error"
+    >
+      Name should be Ajay
+    </p>
   </div>
   <div class="form-group">
     <label for="email">

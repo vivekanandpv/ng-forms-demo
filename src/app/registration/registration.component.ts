@@ -4,6 +4,8 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 
 @Component({
@@ -13,12 +15,20 @@ import {
 })
 export class RegistrationComponent implements OnInit {
   form: FormGroup;
+  standardName = 'Ajay';
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(5)]],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          this.validateName.bind(this),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
       phonenumber: [
         '',
@@ -33,8 +43,24 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  public get password(): FormControl {
+  get password(): FormControl {
     return this.form.controls['password'] as FormControl;
+  }
+
+  get username(): FormControl {
+    return this.form.controls['username'] as FormControl;
+  }
+
+  validateName(ctl: AbstractControl): ValidationErrors {
+    const currentValue = ctl.value;
+
+    if (currentValue === this.standardName) {
+      return null;
+    } else {
+      return {
+        name_error: true,
+      };
+    }
   }
 
   onSubmit() {
