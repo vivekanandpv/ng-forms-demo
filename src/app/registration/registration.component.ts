@@ -7,6 +7,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -23,11 +24,8 @@ export class RegistrationComponent implements OnInit {
     this.form = this.formBuilder.group({
       username: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(5),
-          this.validateName.bind(this),
-        ],
+        [Validators.required, Validators.minLength(3)],
+        this.validateName.bind(this),
       ],
       email: ['', [Validators.required, Validators.email]],
       phonenumber: [
@@ -51,15 +49,15 @@ export class RegistrationComponent implements OnInit {
     return this.form.controls['username'] as FormControl;
   }
 
-  validateName(ctl: AbstractControl): ValidationErrors {
+  validateName(ctl: AbstractControl): Observable<ValidationErrors> {
     const currentValue = ctl.value;
 
     if (currentValue === this.standardName) {
-      return null;
+      return of(null);
     } else {
-      return {
+      return of({
         name_error: true,
-      };
+      });
     }
   }
 
