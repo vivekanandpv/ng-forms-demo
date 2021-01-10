@@ -2,41 +2,34 @@
 
 <form [formGroup]="form" novalidate autocomplete="off" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label for="username">
-      Username
-    </label>
-    <input type="text" class="form-control" formControlName="username" />
+    <label for="username"> Username </label>
+    <input type="text" class="form-control" [formControl]="username" />
   </div>
   <div class="form-group">
-    <label for="email">
-      Email
-    </label>
-    <input type="text" class="form-control" formControlName="email" />
+    <label for="email"> Email </label>
+    <input type="text" class="form-control" [formControl]="email" />
   </div>
   <div class="form-group">
-    <label for="phonenumber">
-      Phone number
-    </label>
-    <input type="number" class="form-control" formControlName="phonenumber" />
+    <label for="phonenumber"> Phone number </label>
+    <input type="number" class="form-control" [formControl]="phonenumber" />
   </div>
   <div class="form-group">
-    <label for="username">
-      Date of birth
-    </label>
-    <input type="date" class="form-control" formControlName="dateOfBirth" />
+    <label for="username"> Date of birth </label>
+    <input type="date" class="form-control" [formControl]="dateOfBirth" />
   </div>
   <div class="form-group">
-    <label for="username">
-      Password
-    </label>
-    <input type="password" class="form-control" formControlName="password" />
+    <label for="username"> Password </label>
+    <input type="password" class="form-control" [formControl]="password" />
     <p
       class="text-danger"
-      *ngIf="password.touched && password.errors?.required"
+      *ngIf="password.dirty && password.hasError('required')"
     >
       Password is required!
     </p>
-    <p class="text-danger" *ngIf="password.dirty && password.errors?.pattern">
+    <p
+      class="text-danger"
+      *ngIf="password.dirty && password.hasError('pattern')"
+    >
       Password must be all numbers
     </p>
   </div>
