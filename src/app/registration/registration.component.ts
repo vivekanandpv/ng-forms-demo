@@ -4,7 +4,12 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { RestService } from '../rest.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
@@ -14,12 +19,19 @@ import {
 export class RegistrationComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private restService: RestService
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(5)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: [
+        '',
+        [Validators.required, Validators.email],
+        [this.validateEmail.bind(this)],
+      ],
       phonenumber: [
         '',
         [
@@ -30,16 +42,6 @@ export class RegistrationComponent implements OnInit {
       ],
       dateOfBirth: [''],
       password: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-    });
-
-    this.email.valueChanges.subscribe((v) => {
-      if (v === 'vivek@gmail.com') {
-        this.phonenumber.setValue(8877445522);
-        this.phonenumber.disable();
-      } else {
-        this.phonenumber.setValue(null);
-        this.phonenumber.enable();
-      }
     });
   }
 
@@ -61,6 +63,20 @@ export class RegistrationComponent implements OnInit {
 
   get password(): FormControl {
     return this.form.controls['password'] as FormControl;
+  }
+
+  validateEmail(ctrl: AbstractControl): Observable<ValidationErrors | null> {
+    return this.restService.validate(ctrl.value).pipe(
+      map((v) => {
+        if (v.valid) {
+          return null;
+        } else {
+          return {
+            emailNotValid: true,
+          };
+        }
+      })
+    );
   }
 
   onSubmit() {

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -12,10 +13,10 @@ import { RegistrationComponent } from './registration/registration.component';
     AppComponent,
     NavbarComponent,
     PageContainerComponent,
-    RegistrationComponent
+    RegistrationComponent,
   ],
-  imports: [BrowserModule, ReactiveFormsModule],
+  imports: [BrowserModule, ReactiveFormsModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
