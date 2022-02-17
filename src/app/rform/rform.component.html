@@ -17,7 +17,7 @@
   </div>
   <h3>To do items</h3>
   <hr />
-  <div *ngFor="let item of items.controls; index as i">
+  <div *ngFor="let item of items; index as i">
     <div [formGroup]="item">
       <div class="row mt-2">
         <div class="col-md-4">
@@ -27,6 +27,8 @@
             formControlName="title"
             placeholder="title"
           />
+
+          <p *ngIf="item.controls['title'].touched && item.controls['title'].hasError('required')" class="text-danger">Required</p>
         </div>
         <div class="col-md-6">
           <input

@@ -16,14 +16,18 @@ export class RformComponent implements OnInit {
     });
   }
 
-  get items(): FormArray {
+  get todos(): FormArray {
     return this.form.controls['items'] as FormArray;
   }
 
-  addItem() {
-    this.form.patchValue({ on: '2018-01-01' });
+  get items(): FormGroup[] {
+    return this.todos.controls as FormGroup[];
+  }
 
-    this.items.push(
+  addItem() {
+    // this.form.patchValue({ on: '2018-01-01' });
+
+    this.todos.push(
       this.formBuilder.group({
         title: ['', [Validators.required, Validators.minLength(5)]],
         description: ['default']
@@ -32,7 +36,7 @@ export class RformComponent implements OnInit {
   }
 
   removeItem(index: number) {
-    this.items.removeAt(index);
+    this.todos.removeAt(index);
   }
 
   ngOnInit() {}
