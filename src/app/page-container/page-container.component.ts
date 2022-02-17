@@ -1,16 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'app-page-container',
-  templateUrl: './page-container.component.html',
-  styleUrls: ['./page-container.component.css']
+    selector: 'app-page-container',
+    templateUrl: './page-container.component.html',
+    styleUrls: ['./page-container.component.css']
 })
 export class PageContainerComponent implements OnInit {
-  constructor() {}
+    form = {
+        name: '',
+        city: '',
+        description: '',
+        exercise: '',
+        newsletter: false
+    };
 
-  ngOnInit() {}
+    constructor() {
+    }
 
-  onSubmitHandler(form) {
-    console.log('Form posted', form);
-  }
+    ngOnInit() {
+        this.form = {
+            name: 'Radha',
+            city: 'Bengaluru',
+            newsletter: true,
+            description: 'I am learning Angular Forms',
+            exercise: '3 times a week'
+        };
+    }
+
+    onSubmit() {
+        console.log(this.form);
+    }
 }
